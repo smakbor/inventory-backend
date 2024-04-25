@@ -1,9 +1,14 @@
 // routes/userRoutes.js
 const express = require("express");
-const { proprietorCreate } = require("../controllers/proprietor.controller");
+const {
+    proprietorCreate,
+    proprietorLogin,
+} = require("../controllers/proprietor.controller");
+const { isAuth } = require("../middlewares/auth");
 const router = express.Router();
 
 // Routes
-router.post("/register", proprietorCreate);
+router.post("/auth/register", proprietorCreate);
+router.post("/auth/login", proprietorLogin);
 
 module.exports = router;

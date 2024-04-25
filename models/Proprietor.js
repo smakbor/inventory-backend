@@ -23,17 +23,22 @@ const proprietorSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    role: {
+        type: String,
+        enum: ["ALL", "EMPLOYEE"],
+        default: "ALL",
+    },
     address: {
         type: String,
-        required: true,
+        required: false,
     },
     nid: {
         type: String,
-        required: true,
+        required: false,
     },
     note: {
         type: String,
-        required: true,
+        required: false,
     },
     createdAt: {
         type: Date,

@@ -1,12 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(bodyParser.json());
+app.use(cors());
 
 // TEST ROUTE
 
@@ -32,15 +34,19 @@ const categoryRoutes = require("./routes/category.route");
 const manufacturerRoutes = require("./routes/manufacturer.route");
 const warrantyRoutes = require("./routes/warranty.route");
 const customerRoutes = require("./routes/customer.route");
+const profileRoutes = require("./routes/profile.routes");
+const { isAuth } = require("./middlewares/auth");
 
 // Routes
+
 app.use("/api/customer", customerRoutes);
 app.use("/api/warranty", warrantyRoutes);
 app.use("/api/manufacturer", manufacturerRoutes);
-app.use("/api/category", categoryRoutes);
+app.use("/api/category", isAuth, categoryRoutes);
 app.use("/api/unit", unitRouts);
-app.use("/api/proprietor", proprietors);
+app.use("/api", proprietors);
 app.use("/api/store", storeRoutes);
+app.use("/api/v1", profileRoutes);
 
 // Start server
 app.listen(PORT, () => {

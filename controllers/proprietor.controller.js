@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Proprietor = require("../models/proprietor");
+const Proprietor = require("../models/Proprietor");
 
 const proprietorCreate = async (req, res) => {
     try {
@@ -15,7 +15,6 @@ const proprietorCreate = async (req, res) => {
             note,
         } = req.body;
         let proprietor = await Proprietor.findOne({ email });
-        console.log(proprietor);
 
         // check proprietor is exists
         if (proprietor) {
@@ -46,6 +45,57 @@ const proprietorCreate = async (req, res) => {
     }
 };
 
+const proprietorLogin = async (req, res) => {
+    const { mobile, password } = req.body;
+    const findUser = await Proprietor.findOne({ mobile });
+    if (findUser) {
+        bcrypt
+            .compare(password, findUser.password)
+            .then((result) => {
+                // const token = {
+                //     _id: findUser._id,
+                //     name: findUser.name,
+                //     email: findUser.email,
+                //     mobile: findUser.mobile,
+                // };
+                // Generate JWT token
+                const token = jwt.sign({ user: findUser._id }, "secret", {
+                    expiresIn: "1h",
+                });
+
+                if (result) {
+                    res.status(200).json({
+                        message: "Login successfull",
+                        accessToken: token,
+                    });
+                } else {
+                    res.status(500).json({
+                        message: "Server errror",
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+};
+
+// const proprietorProfile = async (req, res) => {
+//     const user = req.user._id;
+//     const findUser = await Proprietor.findOne({ user });
+//     if (findUser) {
+//         res.status(200).json({
+//             data: findUser,
+//         });
+//     } else {
+//         res.status(500).json({
+//             message: "Server errror",
+//         });
+//     }
+// };
+
 module.exports = {
     proprietorCreate,
+    proprietorLogin,
+    // proprietorProfile,
 };
