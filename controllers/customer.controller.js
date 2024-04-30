@@ -1,4 +1,5 @@
 const Customer = require("../models/Customer");
+const Store = require("../models/Store");
 
 const getAllCustomer = async (req, res) => {
     try {
@@ -14,9 +15,9 @@ const getAllCustomer = async (req, res) => {
 
 const createCustomer = async (req, res) => {
     try {
+        const id = req.user.user;
+        const findStore = await Store.findOne({ id });
         const {
-            proprietor,
-            store,
             companyName,
             accountNumber,
             name,
@@ -27,10 +28,9 @@ const createCustomer = async (req, res) => {
             prevDue,
             reference,
         } = req.body;
-        console.log(reference);
         const customer = new Customer({
-            proprietor,
-            store,
+            proprietor: id,
+            store: findStore,
             companyName,
             accountNumber,
             name,

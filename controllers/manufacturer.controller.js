@@ -1,4 +1,5 @@
 const Manufacturer = require("../models/Manufacturer");
+const Store = require("../models/Store");
 const getAllManufacturer = async (req, res) => {
     try {
         const allManufacturer = await Manufacturer.find({});
@@ -13,10 +14,12 @@ const getAllManufacturer = async (req, res) => {
 
 const manufacturerCreate = async (req, res) => {
     try {
-        const { proprietor, store, name, note } = req.body;
+        const { name, note } = req.body;
+        const id = req.user.user;
+        const findStore = await Store.findOne({ id });
         const manufacturer = new Manufacturer({
-            proprietor,
-            store,
+            proprietor: id,
+            store: findStore,
             name,
             note,
         });

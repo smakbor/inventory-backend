@@ -9,7 +9,6 @@ const isAuth = async (req, res, next) => {
     }
 
     const decode = jwt.verify(JSON.parse(token), "secret");
-    console.log(decode);
     const id = decode.user;
     const findUser = await Proprietor.find({ id });
     req.user = findUser;
