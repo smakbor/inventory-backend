@@ -1,3 +1,4 @@
+const Store = require("../models/Store");
 const Warranty = require("../models/Warranty");
 
 const getAllWarranty = async (req, res) => {
@@ -10,10 +11,12 @@ const getAllWarranty = async (req, res) => {
 
 const createWarranty = async (req, res) => {
     try {
-        const { proprietor, store, name, note } = req.body;
+        const { name, note } = req.body;
+        const id = req.user.user;
+        const findStore = await Store.findOne({ id });
         const warranty = new Warranty({
-            proprietor,
-            store,
+            proprietor: findStore.proprietor,
+            store: findStore._id,
             name,
             note,
         });

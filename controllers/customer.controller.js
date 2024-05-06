@@ -29,8 +29,8 @@ const createCustomer = async (req, res) => {
             reference,
         } = req.body;
         const customer = new Customer({
-            proprietor: id,
-            store: findStore,
+            proprietor: findStore.proprietor,
+            store: findStore._id,
             companyName,
             accountNumber,
             name,

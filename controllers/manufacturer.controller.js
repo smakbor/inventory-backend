@@ -18,8 +18,8 @@ const manufacturerCreate = async (req, res) => {
         const id = req.user.user;
         const findStore = await Store.findOne({ id });
         const manufacturer = new Manufacturer({
-            proprietor: id,
-            store: findStore,
+            proprietor: findStore.proprietor,
+            store: findStore._id,
             name,
             note,
         });

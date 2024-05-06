@@ -1,3 +1,4 @@
+const Store = require("../models/Store");
 const Unit = require("../models/Unit");
 
 const getAllUnit = async (req, res) => {
@@ -14,11 +15,12 @@ const getAllUnit = async (req, res) => {
 
 const unitCreate = async (req, res) => {
     try {
-        const { proprietor, store, name, note } = req.body;
-
+        const { name, note } = req.body;
+        const id = req?.user?.user;
+        const findStore = await Store.findOne({ id });
         const unit = new Unit({
-            proprietor,
-            store,
+            proprietor: findStore.proprietor,
+            store: findStore._id,
             name,
             note,
         });

@@ -3,7 +3,6 @@ const Store = require("../models/Store");
 const storeCreate = async (req, res) => {
     const { proprietor, storeName, storeAddress, email, note } = req.body;
     let store = await Store.find({ email });
-    console.log(store);
     if (store.length > 0) {
         return res.status(400).json({ message: "Store already exists" });
     }
