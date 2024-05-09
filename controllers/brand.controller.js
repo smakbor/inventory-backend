@@ -1,71 +1,73 @@
-const Manufacturer = require("../models/Manufacturer");
 const Store = require("../models/Store");
-const getAllManufacturer = async (req, res) => {
+const Brand = require("../models/brand");
+
+const getAllBrand = async (req, res) => {
     try {
-        const allManufacturer = await Manufacturer.find({});
+        const allUnit = await Brand.find({});
         res.status(202).json({
-            data: allManufacturer,
-            message: "Manufacturer get successfully",
+            data: allUnit,
+            message: "Brand get successfull",
         });
     } catch (error) {
         console.log(error);
     }
 };
 
-const manufacturerCreate = async (req, res) => {
+const brandCreate = async (req, res) => {
     try {
         const { name, note } = req.body;
-        const id = req.user.user;
+        const id = req?.user?.user;
         const findStore = await Store.findOne({ id });
-        const manufacturer = new Manufacturer({
+        const unit = new Brand({
             proprietor: findStore.proprietor,
             store: findStore._id,
             name,
             note,
         });
-        const result = await manufacturer.save();
+
+        const result = await unit.save();
         res.status(201).json({
             data: result,
-            message: "Manufacturer create successfully",
+            message: "Brand created successfully",
         });
     } catch (error) {
         console.log(error);
     }
 };
 
-const udpateManufacturer = async (req, res) => {
+const brandUpdate = async (req, res) => {
     try {
         const updatedData = req.body;
+        console.log(updatedData);
         const { id } = req.params;
 
-        const result = await Manufacturer.findByIdAndUpdate(id, updatedData, {
+        const result = await Brand.findByIdAndUpdate(id, updatedData, {
             new: true,
         });
         res.status(200).json({
             data: result,
-            message: "Manufacturer Update successfull",
+            message: "Brand Update successfull",
         });
     } catch (error) {
         console.log(error);
     }
 };
 
-let deleteManufacturer = async (req, res) => {
+const deleteBrand = async (req, res) => {
     try {
         const { id } = req.params;
-        const deletedItem = await Manufacturer.findByIdAndDelete({ _id: id });
+        const deletedItem = await Brand.findByIdAndDelete({ _id: id });
         res.status(200).json({
             data: deletedItem,
-            message: "Manufacturer Deleted successfull",
+            message: "Brand Deleted successfull",
         });
     } catch (error) {
         console.log(error);
     }
 };
-
 module.exports = {
-    getAllManufacturer,
-    manufacturerCreate,
-    udpateManufacturer,
-    deleteManufacturer,
+    getAllBrand,
+    brandCreate,
+    brandUpdate,
+    deleteBrand,
 };

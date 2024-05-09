@@ -44,20 +44,6 @@ const customerSchema = new mongoose.Schema({
         type: Number,
         required: false,
     },
-    reference: {
-        name: {
-            type: String,
-            required: false,
-        },
-        mobile: {
-            type: String,
-            required: false,
-        },
-        address: {
-            type: String,
-            required: false,
-        },
-    },
 
     createdAt: {
         type: Date,

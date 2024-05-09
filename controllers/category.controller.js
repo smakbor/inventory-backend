@@ -35,7 +35,39 @@ const categoryCreate = async (req, res) => {
         console.log(error);
     }
 };
+
+const udpateCategory = async (req, res) => {
+    try {
+        const updatedData = req.body;
+        const { id } = req.params;
+
+        const result = await Category.findByIdAndUpdate(id, updatedData, {
+            new: true,
+        });
+        res.status(200).json({
+            data: result,
+            message: "Category Update successfull",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+let deleteCategory = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedItem = await Category.findByIdAndDelete({ _id: id });
+        res.status(200).json({
+            data: deletedItem,
+            message: "Category Deleted successfull",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
 module.exports = {
     getAllCategory,
     categoryCreate,
+    udpateCategory,
+    deleteCategory,
 };

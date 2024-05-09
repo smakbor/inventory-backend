@@ -6,7 +6,7 @@ const getAllSubCategory = async (req, res) => {
         const allSubCategory = await SubCategory.find({});
         res.status(201).json({
             data: allSubCategory,
-            message: "Sub category get successfully",
+            message: "SubCategory get successfully",
         });
     } catch (error) {
         console.log(error);
@@ -30,7 +30,37 @@ const subCategoryCreate = async (req, res) => {
         const result = await cat.save();
         res.status(201).json({
             data: result,
-            message: "Category created successfully",
+            message: "SubCategory created successfully",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const udpateSubCategory = async (req, res) => {
+    try {
+        const updatedData = req.body;
+        const { id } = req.params;
+
+        const result = await SubCategory.findByIdAndUpdate(id, updatedData, {
+            new: true,
+        });
+        res.status(200).json({
+            data: result,
+            message: "SubCategory Update successfull",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+let deleteSubCategory = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedItem = await SubCategory.findByIdAndDelete({ _id: id });
+        res.status(200).json({
+            data: deletedItem,
+            message: "SubCategory Deleted successfull",
         });
     } catch (error) {
         console.log(error);
@@ -39,4 +69,6 @@ const subCategoryCreate = async (req, res) => {
 module.exports = {
     getAllSubCategory,
     subCategoryCreate,
+    udpateSubCategory,
+    deleteSubCategory,
 };

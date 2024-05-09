@@ -44,20 +44,6 @@ const supplierSchema = new mongoose.Schema({
         type: Number,
         required: false,
     },
-    reference: {
-        referenceName: {
-            type: String,
-            required: false,
-        },
-        referenceMobile: {
-            type: String,
-            required: false,
-        },
-        referenceAddress: {
-            type: String,
-            required: false,
-        },
-    },
 
     createdAt: {
         type: Date,
@@ -66,3 +52,4 @@ const supplierSchema = new mongoose.Schema({
 });
 
 const Supplier = mongoose.model("Supplier", supplierSchema);
+module.exports = Supplier;

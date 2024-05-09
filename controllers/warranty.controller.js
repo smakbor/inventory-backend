@@ -30,7 +30,39 @@ const createWarranty = async (req, res) => {
     }
 };
 
+const udpateWarranty = async (req, res) => {
+    try {
+        const updatedData = req.body;
+        const { id } = req.params;
+
+        const result = await Warranty.findByIdAndUpdate(id, updatedData, {
+            new: true,
+        });
+        res.status(200).json({
+            data: result,
+            message: "Warranty Update successfull",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+let deleteWarranty = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedItem = await Warranty.findByIdAndDelete({ _id: id });
+        res.status(200).json({
+            data: deletedItem,
+            message: "Warranty Deleted successfull",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 module.exports = {
     getAllWarranty,
     createWarranty,
+    deleteWarranty,
+    udpateWarranty,
 };

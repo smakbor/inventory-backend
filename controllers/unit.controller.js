@@ -34,7 +34,40 @@ const unitCreate = async (req, res) => {
         console.log(error);
     }
 };
+
+const udpateUnit = async (req, res) => {
+    try {
+        const updatedData = req.body;
+        const { id } = req.params;
+
+        const result = await Unit.findByIdAndUpdate(id, updatedData, {
+            new: true,
+        });
+        res.status(200).json({
+            data: result,
+            message: "Unit Update successfull",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+let deleteUnit = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedItem = await Unit.findByIdAndDelete({ _id: id });
+        res.status(200).json({
+            data: deletedItem,
+            message: "Unit Deleted successfull",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 module.exports = {
     getAllUnit,
     unitCreate,
+    udpateUnit,
+    deleteUnit,
 };
